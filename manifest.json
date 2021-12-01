@@ -50,7 +50,8 @@
     "default_popup": "popup.html"
   },
   "permissions": [
-    "storage"
+    "storage",
+    "contextMenus"
   ],
   "manifest_version": 2
 }

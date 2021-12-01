@@ -190,6 +190,23 @@
               text-decoration: none;
               cursor: pointer;
           }
+
+          .save {
+            color: white;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        
+        .save:hover,
+        .save:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+            display: block;
+        }
+
+
           .modal-header {
               padding: 2px 16px;
               background-color: #5cb85c;
@@ -219,8 +236,8 @@
             padding-top:24px;
             cursor:move;
             background: #FCF0AD;
-            width:100px;
-            height: 100px;  
+            width:200px;
+            height: 200px;  
             box-shadow: rgba(0, 0, 0, 0.3) 5px 5px 15px;
           }
           
@@ -249,5 +266,22 @@
               background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAadEVYdFNvZnR3YXJlAFBhaW50Lk5FVCB2My41LjEwMPRyoQAAArxJREFUSEu1lDtoVEEUhvNY8thk751rghgI+EBQS11XknvvrJXgAyyMQkiwEERLQYj4biwla6mCDzSFiFiJEqIgChYKYmFEdPGRkEITwUaw0uM3s3dhRrZzPfAze+ac882ZuTPbIiL/RQ0nm6GGk82Q72QmwVCrhGmfKL0DXUZV9B0toqfoFNpIXkdWYs1jeU5mQNdReE2i8mf0UFS5gn8MncW/jl5bqfSQBGmYlfkszzHBSK8CcB+95fdhildLb5qzQYxFA+Y3oQvkfLELRrrHxlyW60gY95F0g+RZACUJ4g4JN7dZYmb2mHq2tEuY9JJznPwFFh+3MYflOQBH2eKcROmIREmO4q2ikt0SFd2OV6JxFh0A2E+NOZpXdicOywdHJklPi4r7pTDUTWEF/wPjPgPnPJcBmkIfWTS2C6l0F+B5mtnpsnywOVelj3IkOcmX2uhqLf4TCt8D2M/vK/z+yngCcKG2g1jhP0cVl+WDI72ERkxB3aQwPEjRM/QL6E/iE3zMzixsjUXvMH/PZf0N/kbSnizfGp2Z7d8C+hv94Mz3ciztWdgadbeJPXBZPljpOcAH+fL2JtAZ56wnKVpivIheApklZzvwWk5U7GD+MbrqsnxwpO+iKW5EIIWki+RzQM1dPcNZ9kghXsPvF+gdnRctONRD5FT5eGMuywcr8yD0J5LKdG3AB9BpOu+ykHyJp56U6HhSgmQDeb00cp6XWeW6LXdZPjjklUV6BtgMhYN00ymFGrRuwNslGM7TMfc85d7TiNInbcxheY45WxJjtsZWedaRNt1103GrpWLAcsTMszbXb4GRl5oM2JjD8p3MLNxeMV6h0pcYRxm3IfNvdwQ9Ym6ekQ+rV2RlPstzMuMj8TjS9RROAJim2HS2aKXKb5i/yTGNkWcfSd08lus0Uw0nm6GGk/8uafkDnE8GiO8ONOEAAAAASUVORK5CYII=
               );
           }
+
+          .save{
+            display:none;
+            position: absolute;
+            top:2px;
+            width: 21px;
+            height: 21px;
+            color: rgb(39, 179, 26);
+            font-size: 12px;
+            
+         }
+        
+        .save:hover {
+            cursor: pointer;
+            display: block;
+            
+        }
           
             

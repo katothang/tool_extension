@@ -1,5 +1,4 @@
-$("body").append('<div class="note ui-draggable ui-draggable-handle draggable" style="left: 931px; top: 104px;"><div class="close" style="display: block;"></div><textarea placeholder="">aaa</textarea></div>');
-$('body').click(addNote);
+$('body').dblclick(addNote);
 $( '.note').hover();
 function addNote(e){
     let x = e==null?100:e.pageX;
@@ -10,9 +9,11 @@ function addNote(e){
     }
   );
   
-  var note = $('<div class="note"><div class="close"></div><textarea placeholder=""></textarea></div>');
+  var note = $('<div class="note"><div class="save">save</div><div class="close"></div><textarea placeholder=""></textarea></div>');
   $( note ).css('left',x-50);
   $( note ).css('top',y-25);
+  //$( note ).css('left',300);
+  //$( note ).css('top',300);
   
   $( this ).append(note);
   $( note ).draggable();
@@ -23,15 +24,28 @@ function addNote(e){
       $( note ).remove();
       return false;
     });
+
+    $( note ).find( ".save" ).click(
+      function(){
+        alert("save data");
+        return false;
+      });
   
   $( note ).hover(
 			function(){
 				$( note ).find( ".close" ).toggle();
 			});
+
   
 
 }
 
-addNote(document.getElementsByTagName("body"));
+function loadNote() {
+
+
+
+}
+
+
 
 
