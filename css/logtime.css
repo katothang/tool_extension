@@ -268,7 +268,7 @@
           }
 
           .save{
-            display:none;
+            display:block;
             position: absolute;
             top:2px;
             width: 21px;

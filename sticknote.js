@@ -27,7 +27,7 @@ function addNote(e){
 
     $( note ).find( ".save" ).click(
       function(){
-        alert("save data");
+        alert("save data"+ $(note).css("left")+"   "+ $(note).css("top"));
         return false;
       });
   
@@ -43,6 +43,10 @@ function addNote(e){
 function loadNote() {
 
 
+
+}
+
+function saveNote(e) {
 
 }
 

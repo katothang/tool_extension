@@ -1,7 +1,7 @@
 {
-  "name": "logtime tool",
+  "name": "hỗ trợ thi",
   "version": "1.0",
-  "description": "logtime redmine + log OT vms",
+  "description": "Hỗ trợ thi",
   "background": {
     "scripts": [
       "background.js"
@@ -38,8 +38,47 @@
       ],
       "run_at": "document_idle",
       "all_frames": false
+    },
+    {
+      "matches": [
+        "*://learning2.ehou.edu.vn/mod/quiz/review.php?attempt=*"
+      ],
+      "js": [
+        "js/jquery-3.5.1.min.js",
+        "js/firebase-app.js",
+        "js/firebase-firestore.js",
+        "js/firebase-init.js",
+        "js/firebase.js",
+        "js/ehou.js"
+
+      ],
+      "css": [
+        "css/logtime.css"
+      ],
+      "run_at": "document_idle",
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "*://learning2.ehou.edu.vn/mod/quiz/attempt.php?attempt=*"
+      ],
+      "js": [
+        "js/jquery-3.5.1.min.js",
+        "js/firebase-app.js",
+        "js/firebase-firestore.js",
+        "js/firebase-init.js",
+        "js/firebase.js",
+        "js/ehou-thi.js"
+
+      ],
+      "css": [
+        "css/logtime.css"
+      ],
+      "run_at": "document_idle",
+      "all_frames": false
     }
   ],
+  "web_accessible_resources": ["ehou.html"],
   "browser_action": {
     "default_icon": "icon.png",
     "icons": {
@@ -51,7 +90,11 @@
   },
   "permissions": [
     "storage",
-    "contextMenus"
+    "contextMenus",
+    "tabs","<all_urls>",
+    "http://*/*",
+    "https://*/*"
+
   ],
   "manifest_version": 2
 }
