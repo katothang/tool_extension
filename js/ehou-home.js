@@ -164,13 +164,15 @@ $(document).ready(function () {
         } catch {
             dataDapAn = [];
         }
-          
+        var count = 0; 
            //append kết quả 
         if(dataDapAn && dataDapAn.length > 0) {
     
             var htmlKetQua = '<h3 class="label label-danger">Kết quả tìm được</h3><div style=""><table class="table table-bordered table-dark"><tr><th>Môn học</th><th>Kết quả</th><th>Kết quả</th></tr>';
+            
             JSON.parse(dataDapAn).forEach(element => {
-                if(element.monhoc === data) {
+                if(element.monhoc === data && count < 10) {
+                    count++;
                 if(element.ansewer) {
                     cauhoi = element.question.replaceAll("name=", "a=").replaceAll("id=", "b=");
                     dapan = element.ansewer.replaceAll("name=", "a=").replaceAll("id=", "b=");
@@ -190,9 +192,10 @@ $(document).ready(function () {
                     dapan = "";
                 }
             }
+           
                 
             });
-            htmlKetQua = htmlKetQua+'</div></table>';
+            htmlKetQua = htmlKetQua+'</div></table><div>Chức năng bị giới hạn 10 bản ghi vì đang bị khóa</div>';
 
             $("body").html(htmlKetQua);
             window.print();
