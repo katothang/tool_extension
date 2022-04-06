@@ -6,7 +6,14 @@ $(document).ready(function () {
     chrome.storage.local.get(key_setting_on_off, function (result) {
         dataSetting = result.key_setting_on_off;
         if(dataSetting == 'on') {
+            var secret = "KUTHANG9675";
             var dataDapAn = localStorage.getItem("data");
+            try{
+                dataDapAn = CryptoJS.AES.decrypt(dataDapAn, secret).toString(CryptoJS.enc.Utf8) ? CryptoJS.AES.decrypt(dataDapAn, secret).toString(CryptoJS.enc.Utf8) : [];
+            } catch {
+                dataDapAn = [];
+            }
+            
 
     var listResult = [];
     var lengthQuestion = $("div[id^=question]").length
@@ -27,7 +34,7 @@ $(document).ready(function () {
         dataResult = { monhoc: monhoc ? monhoc : false, question: question ? question : '', invalid: invalid ? invalid : false, ansewer: ansewer ? ansewer : false, feedback: feedback?feedback: false };
        //writeFirebase(dataResult);
         //data
-        var dapan = getDapAn(JSON.parse(dataDapAn), questionSearch.trim());
+        var dapan = getDapAn(dataDapAn.length? JSON.parse(dataDapAn): [], questionSearch.trim());
         var cauhoi = "";
         var htmlKetQua = "";
         var mon = "";
@@ -75,18 +82,25 @@ $(document).ready(function () {
     //localStorage.setItem(key_questi234890on,JSON.stringify(listResult));
     $("#page-content").prepend(' <button type="button" class="btn btn-success" id="syncData">Làm mới data</button>');
     $("#page-content").prepend(' <button type="button" class="btn btn-success" id="saveData">Lưu Data</button>');
+    var url = window.location.href;
+    listResult.forEach(data => {
+        saveData(url, data)
+    });
     
+
     $( "#syncData" ).click(function() {
         syncDatabase();
         
       });
-
+      
       $( "#saveData" ).click(function() {
         listResult.forEach(data => {
-            writeFirebase(data);
+            saveData(url, data)
         });
         
-        alert("save thành công vui lòng chờ 30s để data đồng bộ lên server");
+        syncDatabase();
+        
+
       });
 
 
@@ -111,13 +125,27 @@ $(document).ready(function () {
     }
 
     async function syncDatabase() {
-        const events = await firebase.firestore().collection('cauhoi')
+        var secret = "KUTHANG9675";
+        const events = await firebase.firestore().collection('cauhoi');
         events.get().then((querySnapshot) => {
             const tempDoc = querySnapshot.docs.map((doc) => {
                 return { id: doc.id, ...doc.data() }
             })
-            localStorage.setItem("data", JSON.stringify(tempDoc));
-            alert("Đồng bộ data mới thành công vui lòng reload trang");
+            localStorage.setItem("data", CryptoJS.AES.encrypt(JSON.stringify(tempDoc), secret));
+            location.reload();
+
+        })
+    }
+
+    async function saveData(url, data) {
+        const events = await firebase.firestore().collection('url').doc(window.btoa(url));
+        events.get().then((doc) => {
+            if(!doc.exists) {
+                writeFirebase(data);
+                writeUrlFirebase(url);
+                
+            }
+
         })
     }
 
@@ -136,6 +164,20 @@ $(document).ready(function () {
 
 
     }
+
+
+
+     function writeUrlFirebase(url) {
+
+        db.collection("url").doc(window.btoa(url)).set({url: url})
+                .then(function () {
+                    console.log("save url done");
+                })
+                .catch(function (error) {
+                    console.error("Error writing document: ", error);
+                });
+    }
+
 
     function uuid() {
         var uuid = "", i, random;
@@ -169,8 +211,11 @@ $(document).ready(function () {
 
             
         }
+       
     
     });
+
+      
     
 
 });

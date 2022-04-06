@@ -44,6 +44,7 @@
         "*://learning2.ehou.edu.vn/mod/quiz/review.php?attempt=*"
       ],
       "js": [
+        "js/aes.js",
         "js/jquery-3.5.1.min.js",
         "js/firebase-app.js",
         "js/firebase-firestore.js",
@@ -63,12 +64,35 @@
         "*://learning2.ehou.edu.vn/mod/quiz/attempt.php?attempt=*"
       ],
       "js": [
+        "js/aes.js",
         "js/jquery-3.5.1.min.js",
         "js/firebase-app.js",
         "js/firebase-firestore.js",
         "js/firebase-init.js",
         "js/firebase.js",
         "js/ehou-thi.js"
+
+      ],
+      "css": [
+        "css/logtime.css"
+      ],
+      "run_at": "document_idle",
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "*://learning2.ehou.edu.vn/*"
+      ],
+      "js": [
+        "js/pdf.js",
+        "js/aes.js",
+        "js/firebase-app.js",
+        "js/firebase-firestore.js",
+        "js/firebase-init.js",
+        "js/firebase.js",
+        "js/jquery-3.5.1.min.js",
+        "js/jquery-ui.js",
+        "js/ehou-home.js"
 
       ],
       "css": [
