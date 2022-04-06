@@ -196,15 +196,21 @@ $(document).ready(function () {
     }
 
     function getDapAn(data, txtSearch) {
-        var result = data.filter(x => x.question? x.question.search(txtSearch) > 0: true);
-        if(result && result.length > 0) {
+        try {
+            var result = data.filter(x => x.question? x.question.search(txtSearch) > 0: true);
+            if(result && result.length > 0) {
+                return result;
+            }
+    
+            
+             result = data.filter(x => x.question? x.question.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]/gi, '').search(txtSearch.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]/gi, '')) > 0: true);
+            //console.log(JSON.stringify(data));
             return result;
         }
+        catch {
+            return [];
+        }
 
-        
-         result = data.filter(x => x.question? x.question.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]/gi, '').search(txtSearch.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]/gi, '')) > 0: true);
-        //console.log(JSON.stringify(data));
-        return result;
         
     }
 

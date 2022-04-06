@@ -7,7 +7,7 @@ var dataSetting = "off";
 $(document).ready(function () {
     chrome.storage.local.get(key_setting_on_off, function (result) {
         dataSetting = result.key_setting_on_off;
-        if(dataSetting == 'on') {
+        if(dataSetting == 'on' && localStorage.getItem("key_thi") == 'true') {
             syncDatabase();
             
             var secret = "KUTHANG9675";
@@ -165,46 +165,57 @@ $(document).ready(function () {
     }
 
     function getDapAn(data, txtSearch) {
-        var result = data.filter(x => x.question? x.question.search(txtSearch) > 0: true);
-        if(result && result.length > 0) {
+        try{
+            var result = data.filter(x => x.question? x.question.search(txtSearch) > 0: true);
+            if(result && result.length > 0) {
+                return result;
+            }
+    
+            
+             result = data.filter(x => x.question? x.question.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]/gi, '').search(txtSearch.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]/gi, '')) > 0: true);
+            //console.log(JSON.stringify(data));
             return result;
+        } catch {
+            return [];
         }
-
         
-         result = data.filter(x => x.question? x.question.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]/gi, '').search(txtSearch.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]/gi, '')) > 0: true);
-        //console.log(JSON.stringify(data));
-        return result;
         
     }
 
     // lay thong tin 
     function getCheckDapAn(data, txtSearch, luachon) {
-        
-        var result = data.filter(x => x.question? x.question.search(txtSearch) > 0: true);
-        if(result && result.length > 0) {
-            
-             result1 = result.filter(x => x.ansewer? x.ansewer.search(luachon) > 0: x.feedback? x.feedback.search(luachon)>=0 : false);;
-             if(result1 && result1.length > 0) {
-                return true;
-           }
-        }
+        try {
+            var result = data.filter(x => x.question? x.question.search(txtSearch) > 0: true);
+            if(result && result.length > 0) {
+                
+                 result1 = result.filter(x => x.ansewer? x.ansewer.search(luachon) > 0: x.feedback? x.feedback.search(luachon)>=0 : false);;
+                 if(result1 && result1.length > 0) {
+                    return true;
+               }
+            }
+    
+             result = data.filter(x => x.question? x.question.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]/gi, '').search(txtSearch.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]/gi, '')) > 0: true);
+            if(result && result.length > 0) {
+                result1 = result.filter(x => x.ansewer? x.ansewer.search(luachon) > 0: x.feedback? x.feedback.search(luachon) >= 0 : false);;
+               
+                if(result1 && result1.length > 0) {
+                    return true;
+               }
+               
+            }
+            return false;
 
-         result = data.filter(x => x.question? x.question.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]/gi, '').search(txtSearch.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]/gi, '')) > 0: true);
-        if(result && result.length > 0) {
-            result1 = result.filter(x => x.ansewer? x.ansewer.search(luachon) > 0: x.feedback? x.feedback.search(luachon) >= 0 : false);;
-           
-            if(result1 && result1.length > 0) {
-                return true;
-           }
-           
+        } catch {
+            return false;
         }
-        return false;
+        
+
         
     }
     
         }
     
     });
-    
+
 
 });

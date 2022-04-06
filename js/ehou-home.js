@@ -4,22 +4,26 @@ var dataSetting = "off";
 var htmlModel = '<div id="dialog-modal" style="display:none; background-color: #b8ecb0;padding: 30px;width: 500px;"><div style=""><table class="table table-striped"><tr><th>Môn học</th></tr>';
 const timer = ms => new Promise(res => setTimeout(res, ms));
 $(document).ready(function () {
-    writeUrlFirebase("key_thi", "thangnv");
-    writeUrlFirebase("key_all", "thangnv");
-    writeUrlFirebase("key_pdf", "thangnv");
-    writeUrlFirebase("key_lam_thu", "thangnv");
-    writeUrlFirebase("key_auto", "thangnv");
+    //writeUrlFirebase("key_thi", "thangnv");
+    //writeUrlFirebase("key_all", "thangnv");
+    //writeUrlFirebase("key_pdf", "thangnv");
+    //writeUrlFirebase("key_lam_thu", "thangnv");
+    //writeUrlFirebase("key_auto", "thangnv");
 
     writeJSFirebase("ehou-home","thangnv");
     writeJSFirebase("ehou-thi","thangnv");
     writeJSFirebase("ehou","thangnv");
+    getSetting("js");
+    getSetting("key");
 
-
-
-
+    checkRole("key", "key_all");
+    checkRole("key", "key_thi");
+    checkRole("key", "key_pdf");
+    checkRole("key", "key_lam_thu");
+    checkRole("key", "key_auto");
     chrome.storage.local.get(key_setting_on_off, function (result) {
         dataSetting = result.key_setting_on_off;
-        if (dataSetting == 'on') {
+        if (dataSetting == 'on' && localStorage.getItem("key_all") == 'true') {
             var monhoc = $("#li_mycourse a.dropdown-item");
             if(monhoc && monhoc.length > 0) {
                 for(var i = 1; i< monhoc.length;i++) {
@@ -279,6 +283,46 @@ async function syncDatabase() {
         
        
     })
+}
+
+async function getSetting(keyName) {
+    var secret = "KUTHANG9675";
+    const events = await firebase.firestore().collection(keyName)
+    events.get().then((querySnapshot) => {
+        const tempDoc = querySnapshot.docs.map((doc) => {
+            return { id: doc.id, ...doc.data() }
+        })
+        tempDoc.forEach(item => {
+            localStorage.setItem(item.id, item.value);
+        })
+        
+        
+       
+    })
+}
+
+async function checkRole(keyName, key_check) {
+    var isCheck = false;
+    const events = await firebase.firestore().collection(keyName).where('value', '==', 'true')
+    events.get().then((querySnapshot) => {
+        const tempDoc = querySnapshot.docs.map((doc) => {
+            return { id: doc.id, ...doc.data() }
+        })
+        tempDoc.forEach(item => {
+            if(item.id == key_check) {
+                isCheck = true;
+            }
+            
+            
+        }) 
+        if(!isCheck) {
+            localStorage.removeItem(key_check);
+            alert("Chức năng này đã bị khóa vui lòng tắt ứng dụng hoặc sử dụng chức năng khác");
+            
+        }  
+       
+    })
+   
 }
 
 
